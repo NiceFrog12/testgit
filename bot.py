@@ -5,7 +5,7 @@ bot = telebot.TeleBot(token)
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    bot.reply_to(message, "Привет! Я бот для управления чатом.")
+    bot.reply_to(message, "Привет! Я бот для успокаивания непослушных детей.")
 
 @bot.message_handler(commands=['ban'])
 def ban_user(message):
@@ -16,10 +16,10 @@ def ban_user(message):
         user_status = bot.get_chat_member(chat_id, user_id).status 
          # проверка пользователя
         if user_status == 'administrator' or user_status == 'creator':
-            bot.reply_to(message, "Невозможно забанить администратора.")
+            bot.reply_to(message, "Не прыгай выше головы)")
         else:
             bot.ban_chat_member(chat_id, user_id) # пользователь с user_id будет забанен в чате с chat_id
-            bot.reply_to(message, f"Пользователь @{message.reply_to_message.from_user.username} был забанен.")
+            bot.reply_to(message, f"Непослушный ребенок @{message.reply_to_message.from_user.username} был наказан.")
     else:
         bot.reply_to(message, "Эта команда должна быть использована в ответ на сообщение пользователя, которого вы хотите забанить.")
 
