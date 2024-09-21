@@ -7,6 +7,15 @@ bot = telebot.TeleBot(token)
 def start(message):
     bot.reply_to(message, "Привет! Я бот для успокаивания непослушных детей.")
 
+@bot.message_handler(func=lambda message: True)
+def echo_message(message):
+    if message.text.startswith("https://"):
+        chat_id = message.chat.id
+        user_id = message.from_user.id
+        bot.ban_chat_member(chat_id, user_id)
+    else:
+        bot.reply_to(message, message.text) 
+
 @bot.message_handler(commands=['ban'])
 def ban_user(message):
     if message.reply_to_message: #проверка на то, что эта команда была вызвана в ответ на сообщение 
@@ -22,5 +31,6 @@ def ban_user(message):
             bot.reply_to(message, f"Непослушный ребенок @{message.reply_to_message.from_user.username} был наказан.")
     else:
         bot.reply_to(message, "Эта команда должна быть использована в ответ на сообщение пользователя, которого вы хотите забанить.")
+
 
 bot.infinity_polling(none_stop=True)
